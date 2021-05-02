@@ -2,6 +2,7 @@
 #include "rt2_assignment1/Command.h"
 #include "rt2_assignment1/Position.h"
 #include "rt2_assignment1/RandomPosition.h"
+#include "rt2_assignment1/PositionAction.h"
 
 bool start = false;
 
