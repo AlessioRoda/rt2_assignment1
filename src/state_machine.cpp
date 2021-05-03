@@ -3,6 +3,8 @@
 #include "rt2_assignment1/Position.h"
 #include "rt2_assignment1/RandomPosition.h"
 #include "rt2_assignment1/PositionAction.h"
+#include "actionlib/client/simple_action_client.h"
+#include "actionlib/client/terminal_state.h"
 
 bool start = false;
 
@@ -23,26 +25,54 @@ int main(int argc, char **argv)
    ros::NodeHandle n;
    ros::ServiceServer service= n.advertiseService("/user_interface", user_interface);
    ros::ServiceClient client_rp = n.serviceClient<rt2_assignment1::RandomPosition>("/position_server");
-   ros::ServiceClient client_p = n.serviceClient<rt2_assignment1::Position>("/go_to_point");
+   //ros::ServiceClient client_p = n.serviceClient<rt2_assignment1::Position>("/go_to_point");
    
    rt2_assignment1::RandomPosition rp;
    rp.request.x_max = 5.0;
    rp.request.x_min = -5.0;
    rp.request.y_max = 5.0;
    rp.request.y_min = -5.0;
-   rt2_assignment1::Position p;
+   //rt2_assignment1::Position p;
+  // rt2_assignment1::PositionAction p;
+
+   actionlib::SimpleActionClient <rt2_assignment1::PositionAction> p("go_to_point", true);
+   p.waitForServer();
+   rt2_assignment1::PositionGoal goal_position;
    
    while(ros::ok()){
    	ros::spinOnce();
    	if (start){
    		client_rp.call(rp);
-   		p.request.x = rp.response.x;
-   		p.request.y = rp.response.y;
-   		p.request.theta = rp.response.theta;
-   		std::cout << "\nGoing to the position: x= " << p.request.x << " y= " <<p.request.y << " theta = " <<p.request.theta << std::endl;
-   		client_p.call(p);
+        
+
+        goal_position.x=rp.response.x;
+        goal_position.y=rp.response.y;
+        goal_position.theta=rp.response.theta;
+
+        p.sendGoal(goal_position);
+   		
+        //p.request.x = rp.response.x;
+   		//p.request.y = rp.response.y;
+   		//p.request.theta = rp.response.theta;
+    }
+     else
+     {
+        p.cancelAllGoals();
+     } 
+
+     bool finished_before_timeout = p.waitForResult(ros::Duration(30.0));
+
+     if (finished_before_timeout)
+    {
+        actionlib::SimpleClientGoalState state = p.getState();
+        ROS_INFO("Action finished: %s",state.toString().c_str());
+    }
+    else
+        ROS_INFO("Action did not finish before the time out.");      
+
+   		// std::cout << "\nGoing to the position: x= " << p.request.x << " y= " <<p.request.y << " theta = " <<p.request.theta << std::endl;
+        std::cout << "\nGoing to the position: x= " << goal_position.x << " y= " <<goal_position.y << " theta = " <<goal_position.theta << std::endl;
    		std::cout << "Position reached" << std::endl;
    	}
-   }
    return 0;
 }
