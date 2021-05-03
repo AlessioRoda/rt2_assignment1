@@ -1,6 +1,5 @@
 #include "ros/ros.h"
 #include "rt2_assignment1/Command.h"
-#include "rt2_assignment1/Position.h"
 #include "rt2_assignment1/RandomPosition.h"
 #include "rt2_assignment1/PositionAction.h"
 #include "actionlib/client/simple_action_client.h"

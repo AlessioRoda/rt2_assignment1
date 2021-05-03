@@ -59,7 +59,6 @@ find_package(catkin REQUIRED COMPONENTS
  add_service_files(
    FILES
    Command.srv
-   Position.srv
    RandomPosition.srv
  )
 

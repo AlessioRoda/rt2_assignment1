@@ -8,7 +8,6 @@ from geometry_msgs.msg import Twist, Point
 from nav_msgs.msg import Odometry
 from tf import transformations
 #from rt2_assignment1.srv import Position
-from rt2_assignment1.action import PositionAction
 import math
 
 class PositionAction(object):
@@ -151,7 +150,8 @@ class PositionAction(object):
                 break
         return True
 
-    def main():
+
+if __name__ == '__main__':
         global pub_
         rospy.init_node('go_to_point')
         pub_ = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
@@ -159,6 +159,3 @@ class PositionAction(object):
     # service = rospy.Service('/go_to_point', PositionAction, go_to_point)
         service = PositionAction(rospy.get_name())
         rospy.spin()
-
-if __name__ == '__main__':
-    main()
