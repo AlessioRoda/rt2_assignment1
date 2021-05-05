@@ -41,6 +41,7 @@ int main(int argc, char **argv)
    while(ros::ok()){
    	ros::spinOnce();
    	if (start){
+        ROS_INFO("\nHa letto 'start' ");   
    		client_rp.call(rp);
         
 
@@ -48,7 +49,11 @@ int main(int argc, char **argv)
         goal_position.y=rp.response.y;
         goal_position.theta=rp.response.theta;
 
+        ROS_INFO("\n goal x: ", goal_position.x);
+
         p.sendGoal(goal_position);
+
+        ROS_INFO("\n Goal inviato");
    		
         //p.request.x = rp.response.x;
    		//p.request.y = rp.response.y;
