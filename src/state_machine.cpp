@@ -1,7 +1,14 @@
-#include "ros/ros.h"
-#include "rt2_assignment1/Command.h"
-#include "rt2_assignment1/Position.h"
+#include "rt2_assignment1/srv/Command.hpp"
+#include "rt2_assignment1"
 #include "rt2_assignment1/RandomPosition.h"
+
+#include <chrono>
+#include <functional>
+#include <memory>
+#include <string>
+
+#include "rclcpp/rclcpp.hpp"
+#include "rclcpp_components/register_node_macro.hpp"
 
 bool start = false;
 

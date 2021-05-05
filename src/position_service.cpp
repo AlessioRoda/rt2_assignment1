@@ -1,4 +1,3 @@
-#include "ros/ros.h"
 #include "rt2_assignment1/RandomPosition.h"
 
 
