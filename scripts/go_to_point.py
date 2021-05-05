@@ -31,6 +31,8 @@ ub_a = 0.6
 lb_a = -0.5
 ub_d = 0.6
 
+server=None
+
 
 
 def clbk_odom(msg):
@@ -126,11 +128,12 @@ def done():
     twist_msg.angular.z = 0
     pub_.publish(twist_msg)
     
-def go_to_point(req):
+def go_to_point(goal):
+    global server
     desired_position = Point()
-    desired_position.x = req.x
-    desired_position.y = req.y
-    des_yaw = req.theta
+    desired_position.x = goal.x
+    desired_position.y = goal.y
+    des_yaw = goal.theta
     change_state(0)
     while True:
         if state_ == 0:
@@ -142,15 +145,18 @@ def go_to_point(req):
         elif state_ == 3:
             done()
             break
+    server.set_succeeded()
     return True
 
 def main():
-    global pub_
+    global pub_, server
     rospy.init_node('go_to_point')
     pub_ = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
     sub_odom = rospy.Subscriber('/odom', Odometry, clbk_odom)
 # service = rospy.Service('/go_to_point', PositionAction, go_to_point)
-    #server = SimpleActionServer.PositionAction(rospy.get_name())
+    server = actionlib.SimpleActionServer('/go_to_point', rt2_assignment1.msg.PositionAction, execute_cb = go_to_point, auto_start=False)
+    server.start()
+    
     rospy.spin()
 
 

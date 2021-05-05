@@ -34,8 +34,8 @@ int main(int argc, char **argv)
    //rt2_assignment1::Position p;
   // rt2_assignment1::PositionAction p;
 
-   actionlib::SimpleActionClient <rt2_assignment1::PositionAction> p("go_to_point", true);
-   p.waitForServer();
+   actionlib::SimpleActionClient <rt2_assignment1::PositionAction> p("/go_to_point", true);
+   //p.waitForServer();
    rt2_assignment1::PositionGoal goal_position;
    
    while(ros::ok()){
@@ -49,34 +49,28 @@ int main(int argc, char **argv)
         goal_position.y=rp.response.y;
         goal_position.theta=rp.response.theta;
 
-        ROS_INFO("\n goal x: ", goal_position.x);
-
+        std::cout << "\nGoing to the position: x= " << goal_position.x << " y= " <<goal_position.y << " theta = " <<goal_position.theta << std::endl;
         p.sendGoal(goal_position);
 
         ROS_INFO("\n Goal inviato");
+
+        p.waitForResult();
+
+        std::cout << "Position reached" << std::endl;
    		
         //p.request.x = rp.response.x;
    		//p.request.y = rp.response.y;
    		//p.request.theta = rp.response.theta;
     }
-     else
+     else if(start==false)
      {
         p.cancelAllGoals();
      } 
 
-     bool finished_before_timeout = p.waitForResult(ros::Duration(30.0));
-
-     if (finished_before_timeout)
-    {
-        actionlib::SimpleClientGoalState state = p.getState();
-        ROS_INFO("Action finished: %s",state.toString().c_str());
-    }
-    else
-        ROS_INFO("Action did not finish before the time out.");      
-
-   		// std::cout << "\nGoing to the position: x= " << p.request.x << " y= " <<p.request.y << " theta = " <<p.request.theta << std::endl;
-        std::cout << "\nGoing to the position: x= " << goal_position.x << " y= " <<goal_position.y << " theta = " <<goal_position.theta << std::endl;
-   		std::cout << "Position reached" << std::endl;
+    // std::cout << "\nGoing to the position: x= " << p.request.x << " y= " <<p.request.y << " theta = " <<p.request.theta << std::endl;
+  //  std::cout << "\nGoing to the position: x= " << goal_position.x << " y= " <<goal_position.y << " theta = " <<goal_position.theta << std::endl;
+    //std::cout << "Position reached" << std::endl;
+           
    	}
    return 0;
 }
