@@ -43,18 +43,14 @@ int main(int argc, char **argv)
    while(ros::ok()){
    	ros::spinOnce();
    	if (start){
-        ROS_INFO("\nHa letto 'start' ");   
    		client_rp.call(rp);
         
-
         goal_position.x=rp.response.x;
         goal_position.y=rp.response.y;
         goal_position.theta=rp.response.theta;
 
         std::cout << "\nGoing to the position: x= " << goal_position.x << " y= " <<goal_position.y << " theta = " <<goal_position.theta << std::endl;
         p.sendGoal(goal_position);
-
-        ROS_INFO("\n Goal inviato \n");
 
 
         while (p.getState() != actionlib::SimpleClientGoalState::SUCCEEDED)
@@ -64,16 +60,13 @@ int main(int argc, char **argv)
            {
               //Cancel all the goals
               p.cancelAllGoals();
-              printf("\n Stopping the robot");
-
               goal_reached=false;
 
               break;
 
            }
+            goal_reached=true;
         }
-
-        goal_reached=true;
 	
     }
 
@@ -86,6 +79,7 @@ int main(int argc, char **argv)
 
     }
 
+    //Notify the goal has been reached only in case robot isn't stopped from user
     if(goal_reached)
     {
          //Notofy we reached the goal

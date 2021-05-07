@@ -11,10 +11,9 @@ def main():
     while not rospy.is_shutdown():
         if (x == 1):
             ui_client("start")
-            print("AVVIO")
             x = int(input("\nPress 0 to stop the robot "))
         else:
-            print("Please wait, the robot is going to stop when the position will be reached")
+            print("Robot has been stopped")
             ui_client("stop")
             x = int(input("\nPress 1 to start the robot "))
             
