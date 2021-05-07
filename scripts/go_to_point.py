@@ -130,12 +130,17 @@ def done():
     
 def go_to_point(goal):
     global server
+    result=rt2_assignment1.msg.PositionResult()
     desired_position = Point()
     desired_position.x = goal.x
     desired_position.y = goal.y
     des_yaw = goal.theta
     change_state(0)
     while True:
+        
+        if server.is_preempt_requested():
+            break
+
         if state_ == 0:
             fix_yaw(desired_position)
         elif state_ == 1:
@@ -145,7 +150,7 @@ def go_to_point(goal):
         elif state_ == 3:
             done()
             break
-    server.set_succeeded()
+    server.set_succeeded(result)
     return True
 
 def main():

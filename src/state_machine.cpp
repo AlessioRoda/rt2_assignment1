@@ -4,6 +4,7 @@
 #include "rt2_assignment1/PositionAction.h"
 #include "actionlib/client/simple_action_client.h"
 #include "actionlib/client/terminal_state.h"
+#include <geometry_msgs/Twist.h>
 
 bool start = false;
 
@@ -24,18 +25,15 @@ int main(int argc, char **argv)
    ros::NodeHandle n;
    ros::ServiceServer service= n.advertiseService("/user_interface", user_interface);
    ros::ServiceClient client_rp = n.serviceClient<rt2_assignment1::RandomPosition>("/position_server");
-   //ros::ServiceClient client_p = n.serviceClient<rt2_assignment1::Position>("/go_to_point");
+   ros::Publisher pub_vel= n.advertise<geometry_msgs::Twist>("/cmd_vel", 1000);
    
    rt2_assignment1::RandomPosition rp;
    rp.request.x_max = 5.0;
    rp.request.x_min = -5.0;
    rp.request.y_max = 5.0;
    rp.request.y_min = -5.0;
-   //rt2_assignment1::Position p;
-  // rt2_assignment1::PositionAction p;
 
    actionlib::SimpleActionClient <rt2_assignment1::PositionAction> p("/go_to_point", true);
-   //p.waitForServer();
    rt2_assignment1::PositionGoal goal_position;
    
    while(ros::ok()){
@@ -52,24 +50,30 @@ int main(int argc, char **argv)
         std::cout << "\nGoing to the position: x= " << goal_position.x << " y= " <<goal_position.y << " theta = " <<goal_position.theta << std::endl;
         p.sendGoal(goal_position);
 
-        ROS_INFO("\n Goal inviato");
+        ROS_INFO("\n Goal inviato \n");
 
-        p.waitForResult();
 
-        std::cout << "Position reached" << std::endl;
+        while (p.getState() != actionlib::SimpleClientGoalState::SUCCEEDED)
+        {
+           ros::spinOnce();
+           if(start==false)
+           {
+              //Cancel all the goals
+              p.cancelAllGoals();
+
+              //Set the velocity to zero to stop the robot
+              geometry_msgs::Twist twist;
+              twist.linear.x=0;
+              twist.angular.z=0;
+              pub_vel.publish(twist);
+
+           }
+        }
    		
-        //p.request.x = rp.response.x;
-   		//p.request.y = rp.response.y;
-   		//p.request.theta = rp.response.theta;
     }
-     else if(start==false)
-     {
-        p.cancelAllGoals();
-     } 
 
-    // std::cout << "\nGoing to the position: x= " << p.request.x << " y= " <<p.request.y << " theta = " <<p.request.theta << std::endl;
-  //  std::cout << "\nGoing to the position: x= " << goal_position.x << " y= " <<goal_position.y << " theta = " <<goal_position.theta << std::endl;
-    //std::cout << "Position reached" << std::endl;
+    //Notofy we reached the goal
+    std::cout << "Position reached" << std::endl;
            
    	}
    return 0;
