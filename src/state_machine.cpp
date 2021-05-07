@@ -35,6 +35,10 @@ int main(int argc, char **argv)
 
    actionlib::SimpleActionClient <rt2_assignment1::PositionAction> p("/go_to_point", true);
    rt2_assignment1::PositionGoal goal_position;
+   geometry_msgs::Twist velocity;
+
+   bool goal_reached=false;
+
    
    while(ros::ok()){
    	ros::spinOnce();
@@ -60,20 +64,34 @@ int main(int argc, char **argv)
            {
               //Cancel all the goals
               p.cancelAllGoals();
+              printf("\n Stopping the robot");
 
-              //Set the velocity to zero to stop the robot
-              geometry_msgs::Twist twist;
-              twist.linear.x=0;
-              twist.angular.z=0;
-              pub_vel.publish(twist);
+              goal_reached=false;
+
+              break;
 
            }
         }
-   		
+
+        goal_reached=true;
+	
     }
 
-    //Notofy we reached the goal
-    std::cout << "Position reached" << std::endl;
+    else
+    {
+      //Set the velocity to zero to make sure the robotisn't moving
+            velocity.linear.x=0;
+            velocity.angular.z=0;
+            pub_vel.publish(velocity);
+
+    }
+
+    if(goal_reached)
+    {
+         //Notofy we reached the goal
+         std::cout << "\nPosition reached" << std::endl;
+         goal_reached=false;
+    }
            
    	}
    return 0;
