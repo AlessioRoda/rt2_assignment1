@@ -1,14 +1,20 @@
-#include "rt2_assignment1/srv/Command.hpp"
-#include "rt2_assignment1"
-#include "rt2_assignment1/RandomPosition.h"
-
 #include <chrono>
 #include <functional>
 #include <memory>
 #include <string>
 
-#include "rclcpp/rclcpp.hpp"
+#include"rclcpp/rclcpp.hpp"
 #include "rclcpp_components/register_node_macro.hpp"
+#include "rt2_assignment1/src/Position.hpp"
+#include "rt2_assignment1/src/Command.hpp"
+#include "rt2_assignment1/src/RandomPosition.hpp"
+
+using namespace std::chrono_literals;
+
+namespace rt2_assignment1
+{
+    
+class MinimalServer : public 
 
 bool start = false;
 
@@ -51,4 +57,8 @@ int main(int argc, char **argv)
    	}
    }
    return 0;
+   }
 }
+
+RCLCPP_COMPONENTS_REGISTER_NODE(rt2_assignment1::MinimalServer)
+
