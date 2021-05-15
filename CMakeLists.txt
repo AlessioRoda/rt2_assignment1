@@ -20,6 +20,50 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(rclcpp_components REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
+
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "srv/Position.srv"
+  "srv/Command.srv"
+  "srv/RandomPosition.srv"
+
+ )
+
+
+add_library(state_machine_component SHARED
+             src/state_machine.cpp)
+
+add_library(position_service_component SHARED
+             src/position_service.cpp)
+
+rclcpp_components_register_node(state_machine_component
+              PLUGIN "rt2_assignment1::StateMachine"
+              EXECUTE state_machine_component
+)
+
+rclcpp_components_register_node(position_service_component
+              PLUGIN "rt2_assignment1::RandomServer"
+              EXECUTE random_server_component
+)
+
+ament_target_depemdencies(state_machine_component rclcpp rclcpp_components std_msgs)
+ament_target_depemdencies(position_service_component rclcpp rclcpp_components std_msgs)
+
+install(TARGETS
+        state_machine_component
+        position_service_component
+        comp_fsm
+        DESTINATION lib/${PROJECT_NAME}
+        LIBRARY DESTINATION lib)
+
+install(
+  DIRECTORY launch
+  DESTIANATION share/${PROJECT_NAME})
+
+
+rosidl_target_interfaces(state_machine_component
+${​​​​​PROJECT_NAME}​​​​​ "rosidl_typesupport_cpp"
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
