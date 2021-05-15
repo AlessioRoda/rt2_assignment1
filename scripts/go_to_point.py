@@ -34,7 +34,7 @@ ub_d = 0.6
 server=None
 
 
-
+## Callback to get the current odom position of the robot 
 def clbk_odom(msg):
     global position_
     global yaw_
