@@ -42,7 +42,7 @@ rclcpp_components_register_node(state_machine_component
   src/position_service.cpp)
 
   rclcpp_components_register_node(position_service_component
-  PLUGIN "rt2_assignment1::PositionService"
+  PLUGIN "rt2_assignment1::RandomServer"
   EXECUTABLE comp_position_service)
 
 ament_target_dependencies(state_machine_component rclcpp rclcpp_components std_msgs)
