@@ -1,7 +1,13 @@
+#include <inttypes.h>
+#include <memory>
+
 #include"rclcpp/rclcpp.hpp"
+#include "rclcpp_components/register_node_macro.hpp"
 #include "rt2_assignment1/srv/random_position.hpp"
 
 using std::placeholders::_1;
+using std::placeholders::_2;
+using std::placeholders::_3;
 
 namespace rt2_assignment1
 {
@@ -10,36 +16,36 @@ namespace rt2_assignment1
         public:
 
             RandomServer(const rclcpp::NodeOptions & options)
-            : Node("position_service_component")
+            : Node("position_service_component", options)
             { 
             //initialize the publisher, the subscriber, client1, client2
-            service=this->create_service<rt2_assignment1::srv::RandomPosition>("/position_server", std::bind(&StateMachine::myrandom, this, _1));
+            command_service=this->create_service<rt2_assignment1::srv::RandomPosition>("/position_server", std::bind(&RandomServer::myrandom, this, _1, _2, _3));
 
-            this->myrandom();
+            //this->myrandom();
 
             }
 
 
         private:
 
-            rclcpp::Service<rt2_assignment1::srv::Command>::SharedPtr service;
+                rclcpp::Service<rt2_assignment1::srv::RandomPosition>::SharedPtr command_service;
 
-            bool myrandom(
-            const std::shared_ptr<rmw_request_id_t> request_header,
-            const std::shared_ptr<rt2_assignment1::srv::RandomPosition::Request> req,
-            const std::shared_ptr<rt2_assignment1::srv::RandomPosition::Response> res)
-             {
-                    (void)request_header;
+                bool myrandom(
+                const std::shared_ptr<rmw_request_id_t> request_header,
+                const std::shared_ptr<rt2_assignment1::srv::RandomPosition::Request> req,
+                const std::shared_ptr<rt2_assignment1::srv::RandomPosition::Response> res)
+                    {
+                        (void)request_header;
 
-                     res.x = randMToN(req.x_min, req.x_max);
-                     res.y = randMToN(req.y_min, req.y_max);
-                     res.theta = randMToN(-3.14, 3.14);
-                     return true;
-             };
+                            res->x = randMToN(req->x_min, req->x_max);
+                            res->y = randMToN(req->y_min, req->y_max);
+                            res->theta = randMToN(-3.14, 3.14);
+                            return true;
+                    };
 
-            double randMToN(double M, double N)
-             {     return M + (rand() / ( RAND_MAX / (N-M) ) ) ; }
-    }
+                double randMToN(double M, double N)
+                    {     return M + (rand() / ( RAND_MAX / (N-M) ) ) ; }
+    };
 }
 
 RCLCPP_COMPONENTS_REGISTER_NODE(rt2_assignment1::RandomServer)
