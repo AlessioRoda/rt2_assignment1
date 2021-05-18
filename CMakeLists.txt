@@ -61,10 +61,14 @@ rosidl_target_interfaces(position_service_component
   DESTINATION lib/${PROJECT_NAME}
   LIBRARY DESTINATION lib)
 
-  #install(
-   # DIRECTORY launch
-    #DESTINATION share/${PROJECT_NAME}
- # )
+  install(
+    DIRECTORY launch
+    DESTINATION share/${PROJECT_NAME}
+ )
+
+ install(FILES
+mapping_rules.yaml
+DESTINATION share/${PROJECT_NAME})
   
  if(BUILD_TESTING)
  find_package(ament_lint_auto REQUIRED)
