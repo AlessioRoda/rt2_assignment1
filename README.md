@@ -47,7 +47,7 @@ In the package there's also the "coppeliaScene.ttt" scene, wich has to be laded 
 
 Here there's the rqt_graph of the architecture for each kind of simulation performed.
 
-
+![action_rosgraph](https://user-images.githubusercontent.com/48511957/118813342-4fa60500-b8af-11eb-8e69-ae6ad29f1738.png)
  
  
 
