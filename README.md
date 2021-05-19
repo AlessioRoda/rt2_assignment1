@@ -55,8 +55,13 @@ Here as it's possible to notice, the /state_machine node sends a goal to /go_to_
 
 Here the Coppelia simulation
 
+![coppelia_action_rosgraph](https://user-images.githubusercontent.com/48511957/118832101-9ea86600-b8c0-11eb-8234-d4f7ad7a7476.png)
 
+The considerations about the shared messages are the same as the gazeebo simulation.
 
+### Possible improvements
+
+By having a look to the rqt_graphs and to the genreal composition of the entire architecture, we can notice that the only node that should send /cmd_vel messages should probably be only /go_to_point. In this case when the goal is cancelled the /state_machine node provides to set the linear and angular velocity of the robot to zero, but the node that has to perform this kind of operation could only be /go_to_point, in order to separate the diverse tasks in the architecture.
 
 ## How to run the code 
 
@@ -81,6 +86,8 @@ Now the gazeebo simulation and the termianl user interface should appear automat
 
 For this simulation it is necessary to install the Coppelia simulator, you can find here the link to install it https://www.coppeliarobotics.com/downloads.
 Please notice that you should enlarge your Coppelia scene once you have installed it in order to run correctly the simulation.
+
+In the scene that you can find here the values of the velocity of the motors has been incremented in order to make the simulation faster, so the velocity of the motor in Coppelia is bigger than the velocity that you can read by running rostopic echo /cmd_vel.
 
 
 As before you have to clone the rt2_assignment1 action branch inside your_ros_workspace/src folder and make sure you are using ros noetic inside your .bashrc file. Now before launching the nodes execute 
