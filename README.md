@@ -8,10 +8,10 @@ The genral idea to do that is to set the position the robot has to reach as an a
  
  The code was developped for ros noetic, so make sure you have this distribution in your computer before start, it's not guaranteed that it can work also with other distributions. The entire architecture is based on four nodes:
  
- 1) user_interface which provides an interface to ask to the user to insert "1" to make the robot reach a random position and "0" to stop it, then it sends the command that user has choosen with the Command message.
+ 1) user_interface which provides an interface to ask to the user to insert "1" to make the robot reach a random position and "0" to stop it, then it sends the command that user has choosen with the Command custom service message.
  2) go_to_point is an action server used to reach a goal, it contains the code to make the robot move an holonomic robot in the space.
- 3) random_position_server generate a random position and send it with RandomPosition message.
- 4) state_machine is the "main" of the architecture: it gets the commad message and if it's "start", it publish the position the robot has to reach by setting the coordinates it takes from the RandomPosition message. Then it checks if user want to stop the robot and in case it provides to cancel the goal position to reach.
+ 3) random_position_server generate a random position and send it with RandomPosition custom service message.
+ 4) state_machine is the "main" of the architecture: it gets the commad custom service message and if it's "start", it publish the position the robot has to reach by setting the coordinates it takes from the RandomPosition custom service message. Then it checks if user want to stop the robot and in case it provides to cancel the goal position to reach.
  
  In this package there are six folders:
  
@@ -43,6 +43,7 @@ Finally "urdf" is a folder wich contains the description of the robot we are usi
 
 In the package there's also the "coppeliaScene.ttt" scene, wich has to be laded in Coppelia simulator in order to see the Coppelia simulation.
 
+
 ## Behaviour of the architecture
 
 Here there's the rqt_graph of the architecture for each kind of simulation performed.
@@ -50,4 +51,51 @@ Here there's the rqt_graph of the architecture for each kind of simulation perfo
 ![action_rosgraph](https://user-images.githubusercontent.com/48511957/118813342-4fa60500-b8af-11eb-8e69-ae6ad29f1738.png)
  
  
+Here as it's possible to notice, the /state_machine node sends a goal to /go_to_point and receives a feedback about the state of the robot state. Since the simulation is performed with gazeebo the /odom and /cmd_vel messages are send to it in order to move the robot.
 
+Here the Coppelia simulation
+
+
+
+
+## How to run the code 
+
+There are two possible ways to run this code dependently from the kind of simulation you prefer
+
+### Gazeebo simulation
+
+To launch the Gazeebo simulation you just have to clone the rt2_assignment1 action branch inside your_ros_workspace/src folder, then make sure you are using ros noetic inside your .bashrc file and type from terminal in your_ros_workspace the following instructions below: 
+
+```
+roscore &
+```
+```
+catkin_make
+```
+```
+roslaunch rt2_assignment1 sim.launch
+```
+Now the gazeebo simulation and the termianl user interface should appear automatically; what you should notice is the interface who asks you to type 1 o move the robot and 0 to stop it
+
+### Coppelia simulation
+
+For this simulation it is necessary to install the Coppelia simulator, you can find here the link to install it https://www.coppeliarobotics.com/downloads.
+Please notice that you should enlarge your Coppelia scene once you have installed it in order to run correctly the simulation.
+
+
+As before you have to clone the rt2_assignment1 action branch inside your_ros_workspace/src folder and make sure you are using ros noetic inside your .bashrc file. Now before launching the nodes execute 
+
+```
+roscore &
+```
+then open the Coppelia simulator and upload the "coppeliaScene.ttt" that you have in this package. Note: it's important to run "roscore" before opening Coppelia in order to load ROS on it.
+
+Now type from terminal in your_ros_workspace
+
+```
+catkin_make
+```
+```
+roslaunch rt2_assignment1 sim2.launch
+```
+Now once the terminal user interface is ready you can run the simulation in the Coppelia simulator, then by typing '1' in the previous terminal the robot statrs moving.
