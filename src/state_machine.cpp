@@ -1,3 +1,6 @@
+/**This script provides a ros2 node component that gets the Command custom service to **/
+
+
 #include <chrono>
 #include <functional>
 #include <memory>
@@ -33,8 +36,6 @@ namespace rt2_assignment1
             client_p = this->create_client<rt2_assignment1::srv::Position>("/go_to_point");
             client_random= this->create_client<rt2_assignment1::srv::RandomPosition>("/position_server");
 
-
-           // this->position_server_clbk();
 
             }
 
