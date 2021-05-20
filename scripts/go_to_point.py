@@ -129,17 +129,20 @@ def done():
     pub_.publish(twist_msg)
     
 def go_to_point(goal):
-    global server
+    global server, position_, yaw_, pub_, stopped, state_
     result=rt2_assignment1.msg.PositionResult()
     desired_position = Point()
     desired_position.x = goal.x
     desired_position.y = goal.y
     des_yaw = goal.theta
+
+    stopped=False
+
     change_state(0)
     while True:
         
         if server.is_preempt_requested():
-            break
+            state_=3
 
         if state_ == 0:
             fix_yaw(desired_position)
@@ -151,6 +154,7 @@ def go_to_point(goal):
             done()
             break
     server.set_succeeded(result)
+    
     return True
 
 def main():

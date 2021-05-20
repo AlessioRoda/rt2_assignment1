@@ -4,7 +4,6 @@
 #include "rt2_assignment1/PositionAction.h"
 #include "actionlib/client/simple_action_client.h"
 #include "actionlib/client/terminal_state.h"
-#include <geometry_msgs/Twist.h>
 
 bool start = false;
 
@@ -25,7 +24,6 @@ int main(int argc, char **argv)
    ros::NodeHandle n;
    ros::ServiceServer service= n.advertiseService("/user_interface", user_interface);
    ros::ServiceClient client_rp = n.serviceClient<rt2_assignment1::RandomPosition>("/position_server");
-   ros::Publisher pub_vel= n.advertise<geometry_msgs::Twist>("/cmd_vel", 1000);
    
    rt2_assignment1::RandomPosition rp;
    rp.request.x_max = 5.0;
@@ -35,7 +33,6 @@ int main(int argc, char **argv)
 
    actionlib::SimpleActionClient <rt2_assignment1::PositionAction> p("/go_to_point", true);
    rt2_assignment1::PositionGoal goal_position;
-   geometry_msgs::Twist velocity;
 
    bool goal_reached=false;
 
@@ -70,14 +67,6 @@ int main(int argc, char **argv)
 	
     }
 
-    else
-    {
-      //Set the velocity to zero to make sure the robotisn't moving
-            velocity.linear.x=0;
-            velocity.angular.z=0;
-            pub_vel.publish(velocity);
-
-    }
 
     //Notify the goal has been reached only in case robot isn't stopped from user
     if(goal_reached)

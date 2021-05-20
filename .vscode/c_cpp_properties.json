@@ -1,16 +1,17 @@
 {
     "configurations": [
-      {
-        "browse": {
-          "databaseFilename": "",
-          "limitSymbolsToIncludedHeaders": true
-        },
-        "includePath": [
-          "/opt/ros/noetic/include",
-          "/home/alessio/ROS/devel/include"
-        ],
-        "name": "ROS"
-      }
+        {
+            "browse": {
+                "databaseFilename": "",
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "includePath": [
+                "/opt/ros/noetic/include",
+                "/home/alessio/ROS/devel/include"
+            ],
+            "name": "ROS",
+            "compilerPath": "/usr/bin/cpp"
+        }
     ],
     "version": 4
-  }
+}
