@@ -30,15 +30,15 @@ The "launch" one contains the ros2_sim.launch launch file which is the file to r
 
 In "src" there are the "position_service.cpp" and "state_machine.cpp" codes, they have been developed as ros component and the scope of the code is to generate a random position that is sent from the "position_service_component" to the "state_machine_component" via RandomPosition custom message. When the component "state_machine_component" gets the position from the server it sets the parameters of the position to reach in a Position custom service message and sends to the /go_to_point node thanks to the ros bridge, then the robot starts moving to the target to reach. The "state_machine_component" performs a loop in which verifies if the user sends the 0 command in order to stop the robot; in this case "state_machine_component" won't send a new target to reach once the current target position has been reached.  
 
-The "srv" folder contains the Command.srv and RandomPosition.srv files which contains the information for the message respectively for the command that the user provides in the "/user_interface" node, and the position that robot has to reach provided by the "/random_position_server" node.
+The "srv" folder contains the Command.srv and RandomPosition.srv files which contain the information for the message respectively for the command that the user provides in the "/user_interface" node, and the position that robot has to reach provided by the "/random_position_server" node.
 
 Finally "urdf" is a folder that contains the description of the robot we are using in the simulation.
 
-There are also the gazeebo_script.sh and mapping_rules.yaml files, the first one is an executable to run the entire simulation, while the second one it's necessary to compile the ros bridge in order to share the service custom messages between the two ros distributions.
+There are also the gazebo_script.sh and mapping_rules.yaml files, the first one is an executable to run the entire simulation, while the second one it's necessary to compile the ros bridge in order to share the service custom messages between the two ros distributions.
 
 ## Behaviour of the architecture
 
-As said before the entire architecture is based either in ROS2 and ROS1 code thanks to the ros bridge; the scope of the bridge is to share the custom server messages RandomService, Position and Command from the ROS2 distribution to the ROS1 one. For what regards the sharing of messages between the nodes and the components it's similar to what happens in action branch, in this case there's no sharing of /cmd_vel messages between the sate_machine_component and the gazebo simulation since there isn't the possibility to stop the robot before it reaches a defined goal.
+As said before the entire architecture is based either in ROS2 and ROS1 code thanks to the ros bridge; the scope of the bridge is to share the custom server messages RandomService, Position and Command from the ROS2 distribution to the ROS1 one. For what regards the sharing of messages between the nodes and the components it's similar to what happens in action branch.
 
 ## How to run the code
 
@@ -46,13 +46,14 @@ First before running the code make sure you have downloaded the ros bridge, you 
 
 ### Run with gazeebo_script.sh
 
-The easiest way to launch the entire simulation is just to copy and paste the gazeebo_script.sh file in the root folder, then you have to open it and provide to create in the root folder three files: ros.sh, ros2.sh, ros12.sh. These files are necessary to access to set the correct ros distribution in the terminal.  
-
-Before proceeding install gnome-terminal with
+In this case you need to install gnome-terminal with
 
 ```
 install gnome-terminal
 ```
+
+The easiest way to launch the entire simulation is just to copy and paste the gazebo_script.sh file in the root folder, then you have to provide to create in the root folder three files: ros.sh, ros2.sh, ros12.sh. These files are necessary to set the correct ros distribution in the terminal.  
+
 
 In case you have to create them you can just copy and paste 
 
@@ -71,15 +72,15 @@ ros12.sh:
 
 ```
 #!/bin/bash
-source your_ros1_work_space/install/setup.bash
+source your_ros1_work_space/devel/setup.bash
 source your_ros2_work_space/install/setup.bash
 ```
-Make sure that these files and the gazeebo_script one have the permission to be executable.
+Make sure that these files and the gazebo_script one have the permission to be executable.
 
 Now the only thing that you have to do in order to launch the entire simulation is to open the terminal in the root folder ad digit 
 
 ```
-./gazeebo_script.sh
+./gazebo_script.sh
 ```
 
 Now three different terminals should have been opened and you can find the user terminal interface to move the robot in the first one.
