@@ -35,7 +35,7 @@ The "launch" one contains two launch files
  
 "scripts" contains the two scripts that were implemented also in the main branch. In this case the script "user_interface.py" is the same as in main branch, while the "go_to_point.py" one has small modifications in the main and in the go_to_point function to stop the robot before it reaches the current goal.
 
-In "src" there are the "position_service.cpp" and "state_machine.cpp" files, the first one is the same as in main branch, while "state_machine.cpp" was modified in order to instantiate the position that the robot has to reach as an action goal, so once the goal is created and configured with the Posiation.action parameters (x, y, theta) it's send to the "/go_to_point.py" node. Then the "/state_machine" node executes an infinite loop in which it checks if the user has cancelled the goal and in this case provides to delete the goal and set the linear and angular velocity of the robot to zero in order to stop it.
+In "src" there are the "position_service.cpp" and "state_machine.cpp" files, the first one is the same as in main branch, while "state_machine.cpp" was modified in order to instantiate the position that the robot has to reach as an action goal, so once the goal is created and configured with the Posiation.action parameters (x, y, theta) it's send to the "/go_to_point.py" node. Then the "/state_machine" node executes an infinite loop in which it checks if the user has cancelled the goal and in this case provides to delete the goal.
 
 The "srv" folder contains the Command.srv and RandomPosition.srv files which contains the information for the message respectively for the command that the user provides in the "/user_interface" node, and the position that robot has to reach provided by the "/random_position_server" node.
 
@@ -48,20 +48,18 @@ In the package there's also the "coppeliaScene.ttt" scene, which has to be laded
 
 Here there's the rqt_graph of the architecture for each kind of simulation performed.
 
-![action_rosgraph](https://user-images.githubusercontent.com/48511957/118813342-4fa60500-b8af-11eb-8e69-ae6ad29f1738.png)
+![gazebo_action](https://user-images.githubusercontent.com/48511957/119021685-02559080-b9a0-11eb-8640-8ad4438f21a6.png)
  
  
-Here as it's possible to notice, the /state_machine node sends a goal to /go_to_point and receives a feedback about the state of the robot state and send a /cmd_vel message to gazebo since in case the goal is cancelled it has to force the robot to stop by changing its velocity. Since the simulation is performed with gazebo the /odom and /cmd_vel messages are send to it in order to move the robot.
+Here as it's possible to notice, the /state_machine node sends a goal to /go_to_point and receives a feedback about the state of the robot state. Since the simulation is performed with gazebo the /odom and /cmd_vel messages are send to it in order to move the robot.
 
 Here the Coppelia simulation
 
-![coppelia_action_rosgraph](https://user-images.githubusercontent.com/48511957/118832101-9ea86600-b8c0-11eb-8234-d4f7ad7a7476.png)
+![coppelia_action](https://user-images.githubusercontent.com/48511957/119022478-fddda780-b9a0-11eb-8351-f2ac4a1b373b.png)
+
 
 The considerations about the shared messages are the same as the gazebo simulation.
 
-### Possible improvements
-
-By having a look to the rqt_graphs and to the general composition of the entire architecture, we can notice that the only node that should send /cmd_vel messages should probably be only /go_to_point. In this case when the goal is cancelled the /state_machine node provides to set to zero the linear and angular velocity of the robot, but the node that has to perform this kind of operation could only be /go_to_point, in order to separate the diverse tasks in the architecture.
 
 ## How to run the code 
 
