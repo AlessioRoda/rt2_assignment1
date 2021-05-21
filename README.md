@@ -55,7 +55,7 @@ Once you have done this there are different ways to run the code
 In this case you need to install gnome-terminal with
 
 ```
-install gnome-terminal
+sudo apt-get install gnome-terminal
 ```
 
 The easiest way to launch the entire simulation is just to copy and paste the gazebo_script.sh file in the root folder, then you have to provide to create in the root folder three files: ros.sh, ros2.sh, ros12.sh. These files are necessary to set the correct ros distribution in the terminal.  
