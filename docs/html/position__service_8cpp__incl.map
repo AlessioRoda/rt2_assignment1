@@ -1,8 +1,8 @@
-<map id="src/position_service.cpp" name="src/position_service.cpp">
-<area shape="rect" id="node1" title="The position_service.cpp provides a server that generates random positions in x, y,..." alt="" coords="195,5,374,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,87,92,114"/>
-<area shape="rect" id="node3" title=" " alt="" coords="117,87,194,114"/>
-<area shape="rect" id="node4" title=" " alt="" coords="219,87,351,114"/>
-<area shape="rect" id="node5" title=" " alt="" coords="375,80,578,121"/>
-<area shape="rect" id="node6" title=" " alt="" coords="602,80,765,121"/>
+<map id="/home/alessio/ROS2/src/rt2_assignment1/src/position_service.cpp" name="/home/alessio/ROS2/src/rt2_assignment1/src/position_service.cpp">
+<area shape="rect" id="node1" title="The position_service.cpp provides a server that generates random positions in x, y,..." alt="" coords="193,5,376,61"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,117,92,143"/>
+<area shape="rect" id="node3" title=" " alt="" coords="117,117,194,143"/>
+<area shape="rect" id="node4" title=" " alt="" coords="219,117,351,143"/>
+<area shape="rect" id="node5" title=" " alt="" coords="375,109,578,151"/>
+<area shape="rect" id="node6" title=" " alt="" coords="602,109,765,151"/>
 </map>
