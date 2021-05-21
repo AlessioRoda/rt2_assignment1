@@ -1,3 +1,14 @@
+"""
+/user_interface.py
+
+/It's a simple user interface from terminal in which user can type '1' to move the robot and '0' to stop it. 
+The choice of the user is sent via Command service custom message to the /state_machine node 
+
+/author Alessio Roda
+
+/date May 2021
+"""
+
 import rospy
 import time
 from rt2_assignment1.srv import Command

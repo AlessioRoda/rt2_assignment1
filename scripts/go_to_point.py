@@ -1,5 +1,16 @@
-#! /usr/bin/env python
+"""
+/go_to_point.py
 
+/It's performed as the node that permits the robot to move: it contains all the functions to set the velocity and the orientation of the robot
+based on the target it has to reach via the ActionGoal that was sent from the /state_machine node. When the target to reach is 
+received, the go_to_point function provides to perform the motion of the robot 
+
+/author Alessio Roda
+
+/date May 2021
+"""
+
+#! /usr/bin/env python
 
 import rospy
 import actionlib
@@ -7,7 +18,6 @@ import rt2_assignment1.msg
 from geometry_msgs.msg import Twist, Point
 from nav_msgs.msg import Odometry
 from tf import transformations
-#from rt2_assignment1.srv import Position
 import math
 
 
@@ -127,16 +137,19 @@ def done():
     twist_msg.linear.x = 0
     twist_msg.angular.z = 0
     pub_.publish(twist_msg)
-    
+
+"""
+ /go_to_point function gets the goal position to reach and, based on that, calls the functions to perform the motion of the robot.
+ It checks if the goal has't been cancelled; in this case it sets the state_ variable to 3 in order to terminate the process to move 
+ to reach a certain position
+"""
 def go_to_point(goal):
-    global server, position_, yaw_, pub_, stopped, state_
+    global server, state_
     result=rt2_assignment1.msg.PositionResult()
     desired_position = Point()
     desired_position.x = goal.x
     desired_position.y = goal.y
     des_yaw = goal.theta
-
-    stopped=False
 
     change_state(0)
     while True:
@@ -157,12 +170,13 @@ def go_to_point(goal):
     
     return True
 
+
+## In the main there are the initialization of the publisher, th subscriber and the SimpleActionServer
 def main():
     global pub_, server
     rospy.init_node('go_to_point')
     pub_ = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
     sub_odom = rospy.Subscriber('/odom', Odometry, clbk_odom)
-# service = rospy.Service('/go_to_point', PositionAction, go_to_point)
     server = actionlib.SimpleActionServer('/go_to_point', rt2_assignment1.msg.PositionAction, execute_cb = go_to_point, auto_start=False)
     server.start()
     
