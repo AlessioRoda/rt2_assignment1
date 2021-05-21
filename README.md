@@ -42,7 +42,13 @@ As said before the entire architecture is based either in ROS2 and ROS1 code tha
 
 ## How to run the code
 
-First before running the code make sure you have downloaded the ros bridge, you will have to compile it again in order to permit it to share the custom service messages. Once you have done this there are different ways to run the code
+First before running the code make sure you have downloaded the ros bridge, you will have to compile it again in order to permit it to share the custom service messages, then compile this repository with
+
+```
+colcon build --packages-select rt2_assignment1
+```
+
+Once you have done this there are different ways to run the code
 
 ### Run with gazeebo_script.sh
 
