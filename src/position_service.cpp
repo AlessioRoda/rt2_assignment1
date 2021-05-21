@@ -1,7 +1,7 @@
-/***************************************************************************************************************************
+/*************************************************************************************************************************//**
  * \file   position_service.cpp
  * 
- * \brief This node has the purpose to generate a random postiion in terms of x, y and theta coordinates from a range 
+ * \brief This node has the purpose to generate a random postion in terms of x, y and theta coordinates from a range 
  * that is defined in the /state_machine. Once it has created, it sends it via RandomPosition custom service message to 
  * the /state_machine node
  * 

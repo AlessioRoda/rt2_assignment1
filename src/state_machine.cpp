@@ -1,9 +1,9 @@
-/***************************************************************************************************************************
+/*************************************************************************************************************************//**
  * \file   state_machine.cpp
  * 
  * \brief The state_machine node is a sort of the "main" in the entire architecture: it is connected with all the other nodes
  * (/user_interface, /position_server and /go_to_point). The scope of this node is to get the command from the /user_interface node
- * via the Command server custom message. If the command is equal to "start", steate_machine node sends a request to the 
+ * via the Command server custom message. If the command is equal to "start", state_machine node sends a request to the 
  * /position_server node in order to get a random position in a defined interval. This position will be used to set the parameters for 
  * the action goal to reach, then the goal is sent to /go_to_point node which will move the robot. Then there's a loop in which
  * this node verify that command is not "start" anymore, in this case it cancels the goal in order to stop the robot.
