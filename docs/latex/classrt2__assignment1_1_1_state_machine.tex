@@ -1,0 +1,54 @@
+\hypertarget{classrt2__assignment1_1_1_state_machine}{}\doxysection{rt2\+\_\+assignment1\+::State\+Machine Class Reference}
+\label{classrt2__assignment1_1_1_state_machine}\index{rt2\_assignment1::StateMachine@{rt2\_assignment1::StateMachine}}
+
+
+Inheritance diagram for rt2\+\_\+assignment1\+::State\+Machine\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=251pt]{classrt2__assignment1_1_1_state_machine__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for rt2\+\_\+assignment1\+::State\+Machine\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=251pt]{classrt2__assignment1_1_1_state_machine__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classrt2__assignment1_1_1_state_machine_af6d63f4d9d1fc8f55fdc97f09862ad4f}{State\+Machine}} (const rclcpp\+::\+Node\+Options \&options)
+\item 
+void \mbox{\hyperlink{classrt2__assignment1_1_1_state_machine_afd75b783cd3c3c3a153a8befafd3b284}{position\+\_\+server\+\_\+clbk}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classrt2__assignment1_1_1_state_machine_af6d63f4d9d1fc8f55fdc97f09862ad4f}\label{classrt2__assignment1_1_1_state_machine_af6d63f4d9d1fc8f55fdc97f09862ad4f}} 
+\index{rt2\_assignment1::StateMachine@{rt2\_assignment1::StateMachine}!StateMachine@{StateMachine}}
+\index{StateMachine@{StateMachine}!rt2\_assignment1::StateMachine@{rt2\_assignment1::StateMachine}}
+\doxysubsubsection{\texorpdfstring{StateMachine()}{StateMachine()}}
+{\footnotesize\ttfamily rt2\+\_\+assignment1\+::\+State\+Machine\+::\+State\+Machine (\begin{DoxyParamCaption}\item[{const rclcpp\+::\+Node\+Options \&}]{options }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Constructor of the class \mbox{\hyperlink{classrt2__assignment1_1_1_state_machine}{State\+Machine}} which has to be considered as a ros2 component. The scope of the constructor is to initilaize the command\+\_\+service service in order to get the Command service custom message from the /user\+\_\+interface component. It also initializes the client\+\_\+random to ask a new random position to reach and the client\+\_\+p in order to send the new position to reach to the /go\+\_\+to\+\_\+point node
+
+After the initializations there are two while loop to verify that the client connection was succesful 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classrt2__assignment1_1_1_state_machine_afd75b783cd3c3c3a153a8befafd3b284}\label{classrt2__assignment1_1_1_state_machine_afd75b783cd3c3c3a153a8befafd3b284}} 
+\index{rt2\_assignment1::StateMachine@{rt2\_assignment1::StateMachine}!position\_server\_clbk@{position\_server\_clbk}}
+\index{position\_server\_clbk@{position\_server\_clbk}!rt2\_assignment1::StateMachine@{rt2\_assignment1::StateMachine}}
+\doxysubsubsection{\texorpdfstring{position\_server\_clbk()}{position\_server\_clbk()}}
+{\footnotesize\ttfamily void rt2\+\_\+assignment1\+::\+State\+Machine\+::position\+\_\+server\+\_\+clbk (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Public method to make a request to the random\+\_\+position\+\_\+component in order to get a random position in a defined interval. It initializes the parameters for the request, then if the command from user is \char`\"{}start\char`\"{} it sends the request to the random\+\_\+position\+\_\+component node and checks untill the goal has not been reached. In this case it calls recursively itself 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\mbox{\hyperlink{state__machine_8cpp}{state\+\_\+machine.\+cpp}}\end{DoxyCompactItemize}

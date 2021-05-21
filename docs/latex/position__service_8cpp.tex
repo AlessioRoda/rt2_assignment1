@@ -1,0 +1,36 @@
+\hypertarget{position__service_8cpp}{}\doxysection{src/position\+\_\+service.cpp File Reference}
+\label{position__service_8cpp}\index{src/position\_service.cpp@{src/position\_service.cpp}}
+
+
+The \mbox{\hyperlink{position__service_8cpp}{position\+\_\+service.\+cpp}} provides a server that generates random positions in x, y, theta coordinates. These informations are setted in a Random\+Position custom service message, that is shared between the position\+\_\+service\+\_\+component to the state\+\_\+machine\+\_\+component. Here the code is developed as a node component, by creating a class Random\+Server.  
+
+
+{\ttfamily \#include $<$inttypes.\+h$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include \char`\"{}rclcpp/rclcpp.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}rclcpp\+\_\+components/register\+\_\+node\+\_\+macro.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}rt2\+\_\+assignment1/srv/random\+\_\+position.\+hpp\char`\"{}}\newline
+Include dependency graph for position\+\_\+service.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{position__service_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classrt2__assignment1_1_1_random_server}{rt2\+\_\+assignment1\+::\+Random\+Server}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{position__service_8cpp}{position\+\_\+service.\+cpp}} provides a server that generates random positions in x, y, theta coordinates. These informations are setted in a Random\+Position custom service message, that is shared between the position\+\_\+service\+\_\+component to the state\+\_\+machine\+\_\+component. Here the code is developed as a node component, by creating a class Random\+Server. 
+
+\begin{DoxyAuthor}{Author}
+Alessio Roda 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+May 2021 
+\end{DoxyDate}

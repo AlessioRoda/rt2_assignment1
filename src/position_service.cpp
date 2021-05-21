@@ -1,9 +1,15 @@
-/**
-The position_service.cpp provides a server that generates random positions in x, y, theta coordinates. These informations are setted ina a RandomPosition
-custom service message, that is shared between the position_service_component to the state_machine_component.
-Here the code is developed as a node component, by creating a class RandomServer
-**/
-
+/**************************************//**
+ * \file position_service.cpp
+ * 
+ * \brief  The position_service.cpp provides a server that generates random positions in x, y, theta coordinates. 
+ *         These informations are setted in a RandomPosition custom service message, that is shared 
+ *         between the position_service_component to the state_machine_component.
+ *         Here the code is developed as a node component, by creating a class RandomServer
+ * 
+ * \author Alessio Roda
+ * \date   May 2021
+ * 
+ * ****************************************/
 
 #include <inttypes.h>
 #include <memory>
