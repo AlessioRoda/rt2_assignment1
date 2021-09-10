@@ -17,6 +17,7 @@ import actionlib
 import rt2_assignment1.msg
 from geometry_msgs.msg import Twist, Point
 from nav_msgs.msg import Odometry
+from rt2_assignment1.srv import Velocity
 from tf import transformations
 import math
 
@@ -26,6 +27,11 @@ import math
 position_ = Point()
 feedback=rt2_assignment1.msg.PositionFeedback()
 result=rt2_assignment1.msg.PositionResult()
+
+velocity=None
+lin_coef=1
+ang_coef=1
+
 yaw_ = 0
 position_ = 0
 state_ = 0
@@ -74,6 +80,7 @@ def normalize_angle(angle):
     return angle
 
 def fix_yaw(des_pos):
+    global ang_coef
     desired_yaw = math.atan2(des_pos.y - position_.y, des_pos.x - position_.x)
     err_yaw = normalize_angle(desired_yaw - yaw_)
     rospy.loginfo(err_yaw)
@@ -84,6 +91,7 @@ def fix_yaw(des_pos):
             twist_msg.angular.z = ub_a
         elif twist_msg.angular.z < lb_a:
             twist_msg.angular.z = lb_a
+    twist_msg.angular.z=twist_msg.angular.z*ang_coef
     pub_.publish(twist_msg)
     # state change conditions
     if math.fabs(err_yaw) <= yaw_precision_2_:
@@ -92,6 +100,7 @@ def fix_yaw(des_pos):
 
 
 def go_straight_ahead(des_pos):
+    global lin_coef, ang_coef
     desired_yaw = math.atan2(des_pos.y - position_.y, des_pos.x - position_.x)
     err_yaw = desired_yaw - yaw_
     err_pos = math.sqrt(pow(des_pos.y - position_.y, 2) +
@@ -106,6 +115,9 @@ def go_straight_ahead(des_pos):
            twist_msg.linear.x = ub_d
 
         twist_msg.angular.z = kp_a*err_yaw
+        
+        twist_msg.angular.z=twist_msg.angular.z*ang_coef
+        twist_msg.linear.x=twist_msg.linear.x*lin_coef
         pub_.publish(twist_msg)
     else: # state change conditions
         #print ('Position error: [%s]' % err_pos)
@@ -117,6 +129,7 @@ def go_straight_ahead(des_pos):
         change_state(0)
 
 def fix_final_yaw(des_yaw):
+    global ang_coef, lin_coef
     err_yaw = normalize_angle(des_yaw - yaw_)
     rospy.loginfo(err_yaw)
     twist_msg = Twist()
@@ -126,6 +139,9 @@ def fix_final_yaw(des_yaw):
             twist_msg.angular.z = ub_a
         elif twist_msg.angular.z < lb_a:
             twist_msg.angular.z = lb_a
+
+    twist_msg.angular.z=twist_msg.angular.z*ang_coef
+    twist_msg.linear.x=twist_msg.linear.x*lin_coef
     pub_.publish(twist_msg)
     # state change conditions
     if math.fabs(err_yaw) <= yaw_precision_2_:
@@ -170,13 +186,20 @@ def go_to_point(goal):
     
     return True
 
+def sliderVelocity(vel):
+    global lin_coef, ang_coef
+
+    lin_coef=vel.linear
+    ang_coef=vel.angular
+
 
 ## In the main there are the initialization of the publisher, th subscriber and the SimpleActionServer
 def main():
-    global pub_, server
+    global pub_, server, velocity
     rospy.init_node('go_to_point')
     pub_ = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
     sub_odom = rospy.Subscriber('/odom', Odometry, clbk_odom)
+    velocity = rospy.Service('/set_velocity', Velocity, sliderVelocity)
     server = actionlib.SimpleActionServer('/go_to_point', rt2_assignment1.msg.PositionAction, execute_cb = go_to_point, auto_start=False)
     server.start()
     
