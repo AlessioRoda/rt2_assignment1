@@ -286,7 +286,7 @@ def main():
 #
 # creates a publisher on topic /cmd_vel to publish the robot's velocity
 # creates a subscriber on topic /odom to get the current position of the robot
-# creates a subscriber on topic /set_velocity to get the linear and angualr values from the sliders
+# creates a service on topic /set_velocity to get the linear and angualr values from the sliders
 # creates an action in order to manage the FSM
 #
 ##
@@ -295,7 +295,7 @@ def main():
     rospy.init_node('go_to_point')
     pub_ = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
     sub_odom = rospy.Subscriber('/odom', Odometry, clbk_odom)
-    velocity = rospy.Subscriber('/set_velocity', Velocity, sliderVelocity)
+    velocity = rospy.Service('/set_velocity', Velocity, sliderVelocity)
     server = actionlib.SimpleActionServer('/go_to_point', rt2_assignment1.msg.PositionAction, execute_cb = go_to_point, auto_start=False)
     server.start()
     
