@@ -1,7 +1,7 @@
 /*************************************************************************************************************************//**
  * \file   state_machine.cpp
  * 
- * \brief main of the architecture: develop a state machine in order to manage the simulation
+ * \brief Main of the architecture: develop a state machine in order to manage the simulation
  * 
  * \version 1.0
  * \author Carmine Recchiuto, Alessio Roda
@@ -12,7 +12,7 @@
  *    (/user_interface, /position_server and /go_to_point). The scope of this node is to get a command from the /user_interface node
  *    via the Command server custom message. If the command is equal to "start", /state_machine node sends a request to the 
  *    /position_server node in order to get a random position in a defined interval. This position will be used to set the parameters for 
- *    the action goal to reach, then the goal is sent to /go_to_point node that will pilot the robot to move. Then ther node verifies 
+ *    the action goal to reach, then the goal is sent to /go_to_point node that will drive the robot to move. Then ther node verifies 
  *    that command is not "start" anymore, in this case it cancels the goal in order to stop the robot.
 *****************************************************************************************************************************/
 
@@ -30,7 +30,7 @@ bool start = false;
 /**
  * bool user_interface(req, res)
  * 
- * \brief function impemented to get the user's command 
+ * \brief Function impemented to get the user's command 
  * 
  * \param req: request done by the client (start/stop the robot)
  * 
@@ -55,9 +55,9 @@ bool user_interface(rt2_assignment1::Command::Request &req, rt2_assignment1::Com
 /** 
  * int main(argc, argv)
  * 
- * \brief main function of the node
+ * \brief Main function of the node
  * 
- * \param argc: the number of arguent passed as parameters
+ * \param argc: the number of argument passed as parameters
  * 
  * \param argv: the vector of string containing each argument
  * 
@@ -70,10 +70,10 @@ bool user_interface(rt2_assignment1::Command::Request &req, rt2_assignment1::Com
  *    goal_position: in order to set the random goal generated as a PositionGoal and send it to /go_to_point node
  *    service: read the command sent by the user from the Command service custom message
  * 
- *    After initializations it generates a request for the random position in interval [-5, 5], then executes an infiinte loop 
+ *    After initializations it generates a request for the random position in interval [-5, 5], then executes an infinite loop 
  *    in wich it gets the ranodom position and sends it as a goal position to the /go_to_point node and waits untill
  *    the target is reached. In case in wich the command from /user_interface is "stop" (so start==false) the goal is cancelled
- *    and the robot is stopped, otherwise the loop is executed again
+ *    and the robot is stopped, otherwise the loop is executed again.
  *    
  **/
 int main(int argc, char **argv)
@@ -123,7 +123,6 @@ int main(int argc, char **argv)
         }
 	
     }
-
 
     //Notify the goal has been reached only in case robot isn't stopped from user 
     if(goal_reached)

@@ -72,7 +72,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>This node has the purpose to generate a random postion in terms of x, y and theta coordinates from a range that is defined in the /state_machine. Once it has created, it sends it via RandomPosition custom service message to the /state_machine node.  
+<p>Generate a random postion in terms of x, y and theta coordinates.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;ros/ros.h&quot;</code><br />
 <code>#include &quot;rt2_assignment1/RandomPosition.h&quot;</code><br />
@@ -81,7 +81,7 @@ Include dependency graph for position_service.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="position__service_8cpp__incl.png" border="0" usemap="#src_2position__service_8cpp" alt=""/></div>
 <map name="src_2position__service_8cpp" id="src_2position__service_8cpp">
-<area shape="rect" title="This node has the purpose to generate a random postion in terms of x, y and theta coordinates from a ..." alt="" coords="50,5,229,32"/>
+<area shape="rect" title="Generate a random postion in terms of x, y and theta coordinates." alt="" coords="50,5,229,32"/>
 <area shape="rect" title=" " alt="" coords="5,80,84,107"/>
 <area shape="rect" title=" " alt="" coords="109,80,362,107"/>
 </map>
@@ -90,16 +90,21 @@ Include dependency graph for position_service.cpp:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a10f83119b77a8fbd085a5550955f85ff"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="position__service_8cpp.html#a10f83119b77a8fbd085a5550955f85ff">randMToN</a> (double M, double N)</td></tr>
+<tr class="memdesc:a10f83119b77a8fbd085a5550955f85ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a random number in the defined interval [M, N].  <a href="position__service_8cpp.html#a10f83119b77a8fbd085a5550955f85ff">More...</a><br /></td></tr>
 <tr class="separator:a10f83119b77a8fbd085a5550955f85ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab65b9ff5368189ad34fe4989d50742e4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="position__service_8cpp.html#ab65b9ff5368189ad34fe4989d50742e4">myrandom</a> (rt2_assignment1::RandomPosition::Request &amp;req, rt2_assignment1::RandomPosition::Response &amp;res)</td></tr>
+<tr class="memdesc:ab65b9ff5368189ad34fe4989d50742e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to get the position request and call the function to generate the random position.  <a href="position__service_8cpp.html#ab65b9ff5368189ad34fe4989d50742e4">More...</a><br /></td></tr>
 <tr class="separator:ab65b9ff5368189ad34fe4989d50742e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="position__service_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a> (int argc, char **argv)</td></tr>
+<tr class="memdesc:a3c04138a5bfe5d72780bb7e82a18e627"><td class="mdescLeft">&#160;</td><td class="mdescRight">The main function of the node.  <a href="position__service_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">More...</a><br /></td></tr>
 <tr class="separator:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This node has the purpose to generate a random postion in terms of x, y and theta coordinates from a range that is defined in the /state_machine. Once it has created, it sends it via RandomPosition custom service message to the /state_machine node. </p>
-<dl class="section author"><dt>Author</dt><dd>Alessio Roda </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>May 2021 </dd></dl>
+<div class="textblock"><p>Generate a random postion in terms of x, y and theta coordinates. </p>
+<dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Carmine Recchiuto, Alessio Roda </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>September 2021</dd></dl>
+<p>description: This node has the purpose to generate a random postion in terms of x, y and theta coordinates from a range that is defined in the /state_machine. Once it has been created, it sends it via RandomPosition custom service message, so this node works as a server for the generation of the postions for the /state_machine node. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="a3c04138a5bfe5d72780bb7e82a18e627"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3c04138a5bfe5d72780bb7e82a18e627">&#9670;&nbsp;</a></span>main()</h2>
@@ -126,7 +131,18 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initialize the node and create a new custom service of type RandomPosition on /position_server </p>
+
+<p>The main function of the node. </p>
+<p>int <a class="el" href="position__service_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="The main function of the node.">main(int argc, char **argv)</a></p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">argc</td><td>the number of arguent passed as parameters</td></tr>
+    <tr><td class="paramname">argv</td><td>the vector of string containing each argument</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 when the program has finished</dd></dl>
+<p>description: Main function that initialize the server </p>
 
 </div>
 </div>
@@ -155,7 +171,18 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Gets the params for the interval from the request, then call the function randMToN to obtain a number in that interval </p>
+
+<p>Function to get the position request and call the function to generate the random position. </p>
+<p>bool myrandom (res, req)</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">req</td><td>request done from an other node with the range of minimum and maximum values that the random position must have</td></tr>
+    <tr><td class="paramname">res</td><td>the reply of the server with the x, y and theta coordinates of the target</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true: it notifies that it has generated the random position</dd></dl>
+<p>description: gets the params for the interval from the request, then call the function randMToN to obtain a number in that interval </p>
 
 </div>
 </div>
@@ -184,7 +211,17 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Generate a random number in a defined interval </p>
+
+<p>Generate a random number in the defined interval [M, N]. </p>
+<p>double <a class="el" href="position__service_8cpp.html#a10f83119b77a8fbd085a5550955f85ff" title="Generate a random number in the defined interval [M, N].">randMToN(double M, double N)</a></p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">M</td><td>is the minimum number that can be generated</td></tr>
+    <tr><td class="paramname">N</td><td>is the maximum number that can be generated</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>a random double number corrensonding to a the position to reach in the interval [M, N] </dd></dl>
 
 </div>
 </div>

@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['main_3',['main',['../namespacego__to__point.html#ab92bd6db1ec323a4d795ed6cb40aebe1',1,'go_to_point.main()'],['../position__service_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;position_service.cpp'],['../state__machine_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;state_machine.cpp']]],
-  ['myrandom_4',['myrandom',['../position__service_8cpp.html#ab65b9ff5368189ad34fe4989d50742e4',1,'position_service.cpp']]]
+  ['fix_5ffinal_5fyaw_5',['fix_final_yaw',['../go__to__point_8py.html#a4a406386ca62830c19c93949e923f7bd',1,'go_to_point']]],
+  ['fix_5fyaw_6',['fix_yaw',['../go__to__point_8py.html#a9c3011a3065fcbefcc1c5ad8c9979669',1,'go_to_point']]],
+  ['first_20assignment_20of_20the_20research_20track_202_20course_20_28action_20branch_29_2c_20alessio_20roda_204458313_7',['First Assignment of the Research Track 2 course (action branch), Alessio Roda 4458313',['../md__r_e_a_d_m_e.html',1,'']]]
 ];

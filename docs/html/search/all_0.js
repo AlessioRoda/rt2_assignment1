@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['clbk_5fodom_0',['clbk_odom',['../namespacego__to__point.html#a36304a9f313b0579f7fc69fa01695524',1,'go_to_point']]]
+  ['ang_5fcoef_0',['ang_coef',['../go__to__point_8py.html#a333f82df9f091269ae05380c2b6e9877',1,'go_to_point']]]
 ];

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['first_20assignment_20of_20the_20research_20track_202_20course_20_28action_20branch_29_2c_20alessio_20roda_204458313_1',['First Assignment of the Research Track 2 course (action branch), Alessio Roda 4458313',['../md__r_e_a_d_m_e.html',1,'']]]
+  ['change_5fstate_1',['change_state',['../go__to__point_8py.html#a31ee48e5cae36821049b572a96b7c8be',1,'go_to_point']]],
+  ['clbk_5fodom_2',['clbk_odom',['../go__to__point_8py.html#a36304a9f313b0579f7fc69fa01695524',1,'go_to_point']]]
 ];

@@ -4,13 +4,13 @@
  * \brief Generate a random postion in terms of x, y and theta coordinates
  * 
  * \version 1.0
- * \author Alessio Roda
+ * \author Carmine Recchiuto, Alessio Roda
  * \date   September 2021
  * 
  * description: 
  *   This node has the purpose to generate a random postion in terms of x, y and theta coordinates from a range 
- *   that is defined in the /state_machine. Once it has created, it sends it via RandomPosition custom service message, 
- *   so the node works as a server for the generation of the postions for the /state_machine node.
+ *   that is defined in the /state_machine. Once it has been created, it sends it via RandomPosition custom service message, 
+ *   so this node works as a server for the generation of the postions for the /state_machine node.
 *****************************************************************************************************************************/
 
 #include "ros/ros.h"
@@ -19,7 +19,7 @@
 /**
  * double randMToN(double M, double N)
  * 
- * \brief generate a random number in the defined interval [M, N]
+ * \brief Generate a random number in the defined interval [M, N]
  * 
  * \param M is the minimum number that can be generated
  * 
@@ -36,7 +36,7 @@ double randMToN(double M, double N)
 /** 
  * bool myrandom (res, req)
  * 
- * \brief function to get the position request and call the function to generate the random position
+ * \brief Function to get the position request and call the function to generate the random position
  * 
  * \param req: request done from an other node with the range of minimum and maximum values that the random position must have
  * 
@@ -67,7 +67,7 @@ bool myrandom (rt2_assignment1::RandomPosition::Request &req, rt2_assignment1::R
  * \return 0 when the program has finished
  * 
  * description:
- *      Initialize the node and create a new custom service of type RandomPosition on /position_server
+ *      Main function that initialize the server
  * 
  */
 int main(int argc, char **argv)

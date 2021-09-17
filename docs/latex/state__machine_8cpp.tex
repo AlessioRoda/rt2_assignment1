@@ -2,7 +2,7 @@
 \label{state__machine_8cpp}\index{src/state\_machine.cpp@{src/state\_machine.cpp}}
 
 
-The state\+\_\+machine node is a sort of the \char`\"{}main\char`\"{} in the entire architecture\+: it is connected with all the other nodes (/user\+\_\+interface, /position\+\_\+server and /go\+\_\+to\+\_\+point). The scope of this node is to get the command from the /user\+\_\+interface node via the Command server custom message. If the command is equal to \char`\"{}start\char`\"{}, state\+\_\+machine node sends a request to the /position\+\_\+server node in order to get a random position in a defined interval. This position will be used to set the parameters for the action goal to reach, then the goal is sent to /go\+\_\+to\+\_\+point node which will move the robot. Then there\textquotesingle{}s a loop in which this node verify that command is not \char`\"{}start\char`\"{} anymore, in this case it cancels the goal in order to stop the robot.  
+Main of the architecture\+: develop a state machine in order to manage the simulation.  
 
 
 {\ttfamily \#include \char`\"{}ros/ros.\+h\char`\"{}}\newline
@@ -23,9 +23,9 @@ Include dependency graph for state\+\_\+machine.\+cpp\+:
 \begin{DoxyCompactItemize}
 \item 
 bool \mbox{\hyperlink{state__machine_8cpp_a1a9543636935547580c0657f4c7c0c2b}{user\+\_\+interface}} (rt2\+\_\+assignment1\+::\+Command\+::\+Request \&req, rt2\+\_\+assignment1\+::\+Command\+::\+Response \&res)
-\item 
+\begin{DoxyCompactList}\small\item\em Function impemented to get the user\textquotesingle{}s command. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{state__machine_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char $\ast$$\ast$argv)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Main function of the node. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
@@ -35,15 +35,18 @@ bool {\bfseries start} = false
 
 
 \doxysubsection{Detailed Description}
-The state\+\_\+machine node is a sort of the \char`\"{}main\char`\"{} in the entire architecture\+: it is connected with all the other nodes (/user\+\_\+interface, /position\+\_\+server and /go\+\_\+to\+\_\+point). The scope of this node is to get the command from the /user\+\_\+interface node via the Command server custom message. If the command is equal to \char`\"{}start\char`\"{}, state\+\_\+machine node sends a request to the /position\+\_\+server node in order to get a random position in a defined interval. This position will be used to set the parameters for the action goal to reach, then the goal is sent to /go\+\_\+to\+\_\+point node which will move the robot. Then there\textquotesingle{}s a loop in which this node verify that command is not \char`\"{}start\char`\"{} anymore, in this case it cancels the goal in order to stop the robot. 
+Main of the architecture\+: develop a state machine in order to manage the simulation. 
 
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
 \begin{DoxyAuthor}{Author}
-Alessio Roda 
+Carmine Recchiuto, Alessio Roda 
 \end{DoxyAuthor}
 \begin{DoxyDate}{Date}
-May 2021 
+May 2021
 \end{DoxyDate}
-
+description\+: The state\+\_\+machine node is a sort of \char`\"{}main\char`\"{} in the entire architecture\+: it is connected to all other nodes (/user\+\_\+interface, /position\+\_\+server and /go\+\_\+to\+\_\+point). The scope of this node is to get a command from the /user\+\_\+interface node via the Command server custom message. If the command is equal to \char`\"{}start\char`\"{}, /state\+\_\+machine node sends a request to the /position\+\_\+server node in order to get a random position in a defined interval. This position will be used to set the parameters for the action goal to reach, then the goal is sent to /go\+\_\+to\+\_\+point node that will drive the robot to move. Then ther node verifies that command is not \char`\"{}start\char`\"{} anymore, in this case it cancels the goal in order to stop the robot. 
 
 \doxysubsection{Function Documentation}
 \mbox{\Hypertarget{state__machine_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}\label{state__machine_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}} 
@@ -52,14 +55,46 @@ May 2021
 \doxysubsubsection{\texorpdfstring{main()}{main()}}
 {\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
 
-Main function\+: makes all the initializations as follows\+:
 
-client\+\_\+rp\+: to ask a random goal at custom service Random\+Position goal\+\_\+position\+: in order to set the random goal generated as a Position\+Goal and send it to /go\+\_\+to\+\_\+point service\+: read the command sent by the user from the Command service custom message
 
-then checks if the command has changed, in case delete the goal \mbox{\Hypertarget{state__machine_8cpp_a1a9543636935547580c0657f4c7c0c2b}\label{state__machine_8cpp_a1a9543636935547580c0657f4c7c0c2b}} 
+Main function of the node. 
+
+int main(argc, argv)
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & the number of argument passed as parameters\\
+\hline
+{\em argv} & the vector of string containing each argument\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 when the program ends
+\end{DoxyReturn}
+description\+: The main function, makes all the initializations as follows\+:
+
+client\+\_\+rp\+: to ask a random goal at custom service Random\+Position goal\+\_\+position\+: in order to set the random goal generated as a Position\+Goal and send it to /go\+\_\+to\+\_\+point node service\+: read the command sent by the user from the Command service custom message
+
+After initializations it generates a request for the random position in interval \mbox{[}-\/5, 5\mbox{]}, then executes an infinite loop in wich it gets the ranodom position and sends it as a goal position to the /go\+\_\+to\+\_\+point node and waits untill the target is reached. In case in wich the command from /user\+\_\+interface is \char`\"{}stop\char`\"{} (so start==false) the goal is cancelled and the robot is stopped, otherwise the loop is executed again. \mbox{\Hypertarget{state__machine_8cpp_a1a9543636935547580c0657f4c7c0c2b}\label{state__machine_8cpp_a1a9543636935547580c0657f4c7c0c2b}} 
 \index{state\_machine.cpp@{state\_machine.cpp}!user\_interface@{user\_interface}}
 \index{user\_interface@{user\_interface}!state\_machine.cpp@{state\_machine.cpp}}
 \doxysubsubsection{\texorpdfstring{user\_interface()}{user\_interface()}}
 {\footnotesize\ttfamily bool user\+\_\+interface (\begin{DoxyParamCaption}\item[{rt2\+\_\+assignment1\+::\+Command\+::\+Request \&}]{req,  }\item[{rt2\+\_\+assignment1\+::\+Command\+::\+Response \&}]{res }\end{DoxyParamCaption})}
 
-This callback checks if the command from the /user\+\_\+interface node is \char`\"{}start\char`\"{}, in this case sets to true the correspective variable 
+
+
+Function impemented to get the user\textquotesingle{}s command. 
+
+bool user\+\_\+interface(req, res)
+
+
+\begin{DoxyParams}{Parameters}
+{\em req} & request done by the client (start/stop the robot)\\
+\hline
+{\em res} & respondse generated from the server\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the server finishes to set the \char`\"{}start\char`\"{} variable on the basis of the command received
+\end{DoxyReturn}
+description\+: This callback checks if the command from the /user\+\_\+interface node is \char`\"{}start\char`\"{}, in this case sets to true the correspective variable, otherwise sets it to false 

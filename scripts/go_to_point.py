@@ -1,33 +1,35 @@
-"""
-@package rt2_assignment1
-\file go_to_point.py
-\brief node implementing an aglorhitm to move the robot
-\author Carmine Recchiuto, Alessio Roda
-\version 1.2
-\date September 2021
-
-\details
-
-Subscribes to: <BR>
-    /set_velocity
-    /odom
-
-Publishes to: <BR>
-    /cmd_vel
-
-Action Server: <BR>
-    /go_to_point
-
-It's performed as the node that permits the robot to move: it contains all the functions to set the velocity and the orientation of the robot
-based on the target it has to reach via the ActionGoal that was sent from the /state_machine node. In order to do this, when a new target is 
-generated the robot aligns its orienation, then moves to the target with a velocity that is proportional to the velocity set with the sliders
-in the user_interface notebook interface. Once the target is reached, the node sets the target action as succeded, then waits untill a new 
-target is sent.
-
-
-"""
-
 #! /usr/bin/env python
+
+###
+# @package rt2_assignment1
+# \file go_to_point.py
+# \brief Node implementing an aglorhitm to move the robot
+# \author Carmine Recchiuto, Alessio Roda
+# \version 1.2
+# \date September 2021
+#
+# \details
+#
+# Subscribes to: <BR>
+#     /odom
+#
+# Publishes to: <BR>
+#     /cmd_vel
+#
+# Client to: <BR>
+#     /set_velocity
+#
+# Action server: <BR>
+#    /go_to_point
+#
+# It's performed as the node that permits the robot to move: it contains all the functions to set the velocity and the orientation of the robot
+# based on the target it has to reach via the ActionGoal that was sent from the /state_machine node. In order to do this, when a new target is 
+# generated the robot aligns its orienation, then moves to the target with a velocity that is proportional to the velocity set with the sliders
+# in the user_interface notebook interface. Once the target is reached, the node sets the target action as succeded, then waits untill a new 
+# target is sent.
+#
+#
+###
 
 import rospy
 import actionlib
@@ -55,9 +57,9 @@ yaw_ = 0
 position_ = 0
 ## state set to 0 as default
 state_ = 0
-## Initialization of variable for the publish /cmd_vel messages
+## Initialization of variable for the publisher to /cmd_vel
 pub_ = None
-## Initialization of variable for the subscriber to /set_velocity 
+## Initialization of variable for the client to /set_velocity 
 velocity=None
 
 ## parameters for control
@@ -80,16 +82,17 @@ ub_d = 0.6
 server=None
 
 
-def clbk_odom(msg):
 ## 
+# \brief Odometry callback
+# \param msg: Odometry type message
+#
 # Callback to get the current position of the robot
 # from an /odom message, type Odometry
 #
-# current posiotion is saved in terms of x, y and z position and w orientation
-#
-# /param msg: Odometry type message
-#
+# current posiotion is saved in terms of x, y and z coordinates and w orientation
 ##
+def clbk_odom(msg):
+
     global position_
     global yaw_
 
@@ -106,35 +109,43 @@ def clbk_odom(msg):
     yaw_ = euler[2]
 
 
-def change_state(state):
 ## 
+# \brief Change state 
+# \param state(int): int variable for the new state of the FSM
+#
 # Function to change from a state to another in the go_to_point function
-# 
-# /param state(int): int variable for the new state of the FSM
+#
 ##
+def change_state(state):
+
     global state_
     state_ = state
     print ('State changed to [%s]' % state_)
 
 
-def normalize_angle(angle):
 ##
-# Function to normalize the angle of the robot
+# 
+# \brief Normalize the angle
+# \param angle(float): float varaible for the angle to normalize
+# \return: returns the normalized angle 
 #
-# /param angle(float): float varaible for the angle to normalize
-# /return: returns the normalized angle 
-##
+# Function to normalize the angle of the robot
+###
+def normalize_angle(angle):
 
     if(math.fabs(angle) > math.pi):
         angle = angle - (2 * math.pi * angle) / (math.fabs(angle))
     return angle
 
-def fix_yaw(des_pos):
-##
-# Function used to orient the robot to the target
+###
+# 
+# \brief Fix the yaw angle
+# \param des_pos(Point): desired position to reach
 #
-# /param des_pos(Point): desired position to reach
-##
+# Function used to orient the robot respect to the target
+###
+def fix_yaw(des_pos):
+
     global ang_coef
     desired_yaw = math.atan2(des_pos.y - position_.y, des_pos.x - position_.x)
     err_yaw = normalize_angle(desired_yaw - yaw_)
@@ -154,14 +165,17 @@ def fix_yaw(des_pos):
         change_state(1)
 
 
-def go_straight_ahead(des_pos):
 ##
+# 
+# \brief Function to go straight
+# \param des_pos(Point): the desired position to reach
+#
 # Function to call in case the robot has to go straigth once it is correctly orriented
 #
 # Set the linear and angular velocity of the robot according to the distance to the target
-#
-# /param des_pos(Point): the desired position to reach
 ##
+def go_straight_ahead(des_pos):
+
     global lin_coef, ang_coef
     desired_yaw = math.atan2(des_pos.y - position_.y, des_pos.x - position_.x)
     err_yaw = desired_yaw - yaw_
@@ -190,13 +204,17 @@ def go_straight_ahead(des_pos):
         #print ('Yaw error: [%s]' % err_yaw)
         change_state(0)
 
-def fix_final_yaw(des_yaw):
+
 ##
+# 
+# \brief Final fix to yaw angle
+# \param des_yaw(float): the desired yaw
+#
 # Once the goal's position is acheived the function
 # orients the robot in order to reach the goal
-#  
-# /param des_yaw(float): the desired yaw
 ## 
+def fix_final_yaw(des_yaw):
+
     global ang_coef, lin_coef
     err_yaw = normalize_angle(des_yaw - yaw_)
     rospy.loginfo(err_yaw)
@@ -215,31 +233,35 @@ def fix_final_yaw(des_yaw):
     if math.fabs(err_yaw) <= yaw_precision_2_:
         #print ('Yaw error: [%s]' % err_yaw)
         change_state(3)
-        
+
+##
+#  \brief Function to call when the target is reached or when it's cancelled,
+#         it sets to zero the linear and angualar velocity of the robot in order to stop it
+##        
 def done():
-##
-# Function to call when the target is reached or when it's cancelled
-# it sets to zero the linear and angualar velocity of the robot in order to stop it
-##
+
     twist_msg = Twist()
     twist_msg.linear.x = 0
     twist_msg.angular.z = 0
     pub_.publish(twist_msg)
 
 
-def go_to_point(goal):
 ##
+# 
+# \brief Function to perform the motion of the robot to reach the goal
+# \param goal(Point): the goal to reach
+# \return: a boolean 'True' value to notify that the function has finished
+#
 # Function that gets the goal position to reach and, based on that, calls the functions to perform the motion of the robot.
 # 
 # It checks if the goal has't been cancelled; in this case it sets the state_ variable to 3 in order to terminate the process to move 
 # to reach a certain position
 #
 # It also multiplies the linear and angular velocity values sent from the sliders via Velocity custom service message
-# to the current linear and angular velocity, then publish the new velocity message to perform the correct motion to reache the goal.
-#
-# /param goal(Point): the goal to reach
-# /return: a boolean 'True' value to notify that the function has finished
+# to the current linear and angular velocity, then publishes the new velocity message to perform the correct motion to reach the goal.
 ##
+def go_to_point(goal):
+
     global server, state_
     result=rt2_assignment1.msg.PositionResult()
     desired_position = Point()
@@ -266,30 +288,36 @@ def go_to_point(goal):
     
     return True
 
-def sliderVelocity(vel):
+
 ## 
+# 
+# \brief Get the velocity from the sliders
+# \param(Velocity): a Velocity custom message 
+#
 # Callback to get the linar and angular velocity values sent from the user_interface by Velocity custom service message
 #
 # It saves these values in the global variables lin_coef and ang_coef
-#
-# /param(Velocity): a Velocity custom message 
 ##
+def sliderVelocity(vel):
+
     global lin_coef, ang_coef
 
     lin_coef=vel.linear
     ang_coef=vel.angular
 
 
-def main():
 ##
+# \brief Main function of the node
+#
 # The main function for this script: it initializes the publisher, the subscribers and the SimpleActionServer, in particular
 #
 # creates a publisher on topic /cmd_vel to publish the robot's velocity
 # creates a subscriber on topic /odom to get the current position of the robot
-# creates a service on topic /set_velocity to get the linear and angualr values from the sliders
+# creates a service on topic /set_velocity to get the linear and angular values from the sliders
 # creates an action in order to manage the FSM
 #
 ##
+def main():
 
     global pub_, server, velocity
     rospy.init_node('go_to_point')

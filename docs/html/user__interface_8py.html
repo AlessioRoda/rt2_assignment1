@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>My Project: Namespace List</title>
+<title>My Project: scripts/user_interface.py File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,7 +45,6 @@ $(function() {
 });
 /* @license-end */</script>
 <div id="main-nav"></div>
-</div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -60,17 +59,58 @@ $(function() {
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_53e6fa9553ac22a5646d2a2b2d7b97a1.html">scripts</a></li>  </ul>
+</div>
+</div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Namespace List</div>  </div>
+<div class="title">user_interface.py File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock">Here is a list of all documented namespaces with brief descriptions:</div><div class="directory">
-<table class="directory">
-<tr id="row_0_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">N</span></span><a class="el" href="namespacego__to__point.html" target="_self">go_to_point</a></td><td class="desc"></td></tr>
-<tr id="row_1_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">N</span></span><a class="el" href="namespaceuser__interface.html" target="_self">user_interface</a></td><td class="desc"></td></tr>
+
+<p>Simple user interface to start and stop the robot.  
+<a href="#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ac26bdb296b6776907b72c17ce5a1b24a"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="user__interface_8py.html#ac26bdb296b6776907b72c17ce5a1b24a">user_interface.main</a> ()</td></tr>
+<tr class="memdesc:ac26bdb296b6776907b72c17ce5a1b24a"><td class="mdescLeft">&#160;</td><td class="mdescRight">\breif The main fuction of the script  <a href="user__interface_8py.html#ac26bdb296b6776907b72c17ce5a1b24a">More...</a><br /></td></tr>
+<tr class="separator:ac26bdb296b6776907b72c17ce5a1b24a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- directory -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Simple user interface to start and stop the robot. </p>
+<dl class="section author"><dt>Author</dt><dd>Carmine Recchiuto, Alessio Roda </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>September 2021</dd></dl>
+<p>Client to: <br  />
+ /user_interface</p>
+<p>It's the node that provides a very simple user interface to pilot the robot, so that</p>
+<p>if user press 1 the node sends a "start" message to the user_interface server if user press 0 the node sends a "stop" message to the user_interface server </p>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="ac26bdb296b6776907b72c17ce5a1b24a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac26bdb296b6776907b72c17ce5a1b24a">&#9670;&nbsp;</a></span>main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def user_interface.main </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>\breif The main fuction of the script </p>
+<p>It initializes the client to /user_interface, then checks the input genrated by th user if it's 1 sends a "start" message, otherwise it sends a "stop" message </p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
