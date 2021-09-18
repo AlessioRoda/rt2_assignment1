@@ -1,0 +1,38 @@
+\hypertarget{namespaceuser__interface}{}\doxysection{user\+\_\+interface Namespace Reference}
+\label{namespaceuser__interface}\index{user\_interface@{user\_interface}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespaceuser__interface_ac26bdb296b6776907b72c17ce5a1b24a}{main}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}.. module:: user_interface
+:platform: Unix
+:synopsis: Python module for the user Interface
+
+.. moduleauthor:: Alessio Roda alessioroda98@gmail.com
+
+This node implements an user interface
+
+Service:
+/user_interface
+
+
+It's the node that provides a very simple user interface to pilot the robot, so that
+
+if user press 1 the node sends a "start" message to the user_interface server
+if user press 0 the node sends a "stop" message to the user_interface server\end{DoxyVerb}
+ 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespaceuser__interface_ac26bdb296b6776907b72c17ce5a1b24a}\label{namespaceuser__interface_ac26bdb296b6776907b72c17ce5a1b24a}} 
+\index{user\_interface@{user\_interface}!main@{main}}
+\index{main@{main}!user\_interface@{user\_interface}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily def user\+\_\+interface.\+main (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}It initializes the client to /user_interface, then checks the input genrated by th user
+if it's 1 sends a "start" message, otherwise it sends a "stop" message\end{DoxyVerb}
+ 
