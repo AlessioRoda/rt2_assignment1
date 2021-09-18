@@ -2,8 +2,8 @@
 
 """
 .. module:: go_to_point
-    :platform: Unix
-    :synopsis: Node implementing an aglorhitm to move the robot
+   :platform: Unix
+   :synopsis: Node implementing an aglorhitm to move the robot
 	
 .. moduleauthor:: Alessio Roda alessioroda98@gmail.com
 

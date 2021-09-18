@@ -459,8 +459,8 @@ creates a service on topic /set_velocity to get the linear and angular values fr
     </briefdescription>
     <detaileddescription>
 <para><verbatim>.. module:: go_to_point
-    :platform: Unix
-    :synopsis: Node implementing an aglorhitm to move the robot
+   :platform: Unix
+   :synopsis: Node implementing an aglorhitm to move the robot
     
 .. moduleauthor:: Alessio Roda alessioroda98@gmail.com
 
